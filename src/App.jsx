@@ -1,16 +1,31 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Weatherbox from './component/Weatherbox';
+import WeatherButton from './component/WeatherButton';
 
 /*
-1. 앱이 실행되자마자 현재위치기반의 날씨가 보인다
-2. 현재 날씨정보에는 도씨, 화씨, 날씨상태
-3. 5개의 버튼이 있다 (1개는 현재위치, 4개는 다른 도시)
+1. 앱이 실행되자마자 현재위치기반의 날씨가 보인다 V
+2. 현재 날씨정보에는 도씨, 화씨, 날씨상태 V
+3. 5개의 버튼이 있다 (1개는 현재위치, 4개는 다른 도시) V
 4. 도시버튼 클릭 시 도시별 날씨가 나온다
 5. 현재위치 버튼을 누르면 다시 현재위치 기반의 날씨가 나온다
 6. 데이터를 들고오는 동안 로딩스피터가 돌아야 함
 */
 
+// 리액트는 단방향 소통밖에 안되므로 부모 -> 자식, App에 모든 state와 함수를 가지고 있어야 한다.
 function App() {
+  // getWeatherByCurrentLocation 함수에서 데이터를 받아서 Weatherbox 컴포넌트에 보여준다
+  const [weather, setWeather] = useState(null);
+  // city 정보 state, WeatherButton 프롭스로 넘김
+  const [city, setCity] = useState('');
+  // 도시정보, 100개 1000개 이상의 도시정보들이 들어올 수 있으니 배열을 사용한 것
+  const cities = [
+    'Taipei',
+    'Barcelona',
+    'Chiang Mai',
+    'Takamatsu',
+  ];
   // 현재위치 정보 함수
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -22,17 +37,47 @@ function App() {
   };
   // 현재위치 날씨 함수
   const getWeatherByCurrentLocation = async (lat, lon) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=5276c98c6ea7b92a652b3169f3f6e807`;
+    // 섭씨 표현: units=metric 추가
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=5276c98c6ea7b92a652b3169f3f6e807`;
     let response = await fetch(url);
     let data = await response.json();
-    console.log('data', data);
+    // 데이터 값을 setWeather로 넣어주기
+    setWeather(data);
+  };
+  // 도시 정보 불러오는 함수
+  const getWeatherByCity = async () => {
+    // 클릭하여 변경된 city state를 담는다
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=5276c98c6ea7b92a652b3169f3f6e807`;
+    let response = await fetch(url);
+    let data = await response.json();
+    // 클릭하여 변경된 도시의 날씨정보
+    setWeather(data);
   };
 
+  // 앱이 렌더된 이후에 바로 city가 없으면 getCurrentLocation 함수가 실행, city가 있으면? 클릭됬으면 getWeatherByCity함수가 실행
   useEffect(() => {
-    getCurrentLocation();
-  }, []);
+    if (city === '') {
+      getCurrentLocation();
+    } else {
+      getWeatherByCity();
+    }
+  }, [city]);
 
-  return <></>;
+  // // 배열안에 city가 업데이트 될 때마다 useEffect 함수 호출
+  // useEffect(() => {
+  //   // console.log('city',city)
+  //   getWeatherByCity();
+  // }, [city]);
+  return (
+    <>
+      <div className="container">
+        {/* 프롭스로 weather data 넘김 */}
+        <Weatherbox weather={weather} />
+        {/* 프롭스로 cities 넘김 / setCity도 넘김 */}
+        <WeatherButton cities={cities} setCity={setCity} />
+      </div>
+    </>
+  );
 }
 
 export default App;
