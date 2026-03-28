@@ -13,7 +13,7 @@ import WeatherButton from './component/WeatherButton';
 5. 현재위치 버튼을 누르면 다시 현재위치 기반의 날씨가 나온다
 6. 데이터를 들고오는 동안 로딩스피너가 돌아야 함
 */
-
+const API_KEY = import.meta.env.VITE_API_KEY;
 // 리액트는 단방향 소통밖에 안되므로 부모 -> 자식, App에 모든 state와 함수를 가지고 있어야 한다.
 function App() {
   // getWeatherByCurrentLocation 함수에서 데이터를 받아서 Weatherbox 컴포넌트에 보여준다
@@ -41,7 +41,7 @@ function App() {
   // 현재위치 날씨 함수
   const getWeatherByCurrentLocation = async (lat, lon) => {
     // 섭씨 표현: units=metric 추가
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=5276c98c6ea7b92a652b3169f3f6e807&lang=kr`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}&lang=kr`;
     // 자료 받아오기 전에 로딩 표시
     setLoading(true);
     let response = await fetch(url);
@@ -63,7 +63,7 @@ function App() {
   // 도시 정보 불러오는 함수
   const getWeatherByCity = async () => {
     // 클릭하여 변경된 city state를 담는다
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=5276c98c6ea7b92a652b3169f3f6e807&lang=kr`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}&lang=kr`;
     setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
