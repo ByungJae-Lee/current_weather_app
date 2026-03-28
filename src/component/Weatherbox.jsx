@@ -13,7 +13,8 @@ const Weatherbox = ({ weather }) => {
       {/* 날씨상태 */}
       <h2>{weather?.weather[0].description}</h2>
       {/* 온도 */}
-      <h3>{`현재 ${Math.floor(weather?.main.temp)}Cº/ 체감 ${Math.floor(weather?.main.feels_like)}Cº`}</h3>
+      <h3>{`현재 ${Math.floor(weather?.main.temp)}Cº/ 화씨 ${Math.floor(weather?.main.feels_like * 1.8 + 32)}Fº`}</h3>
+      <h3>{`체감 ${Math.floor(weather?.main.feels_like)}Cº`}</h3>
       <h3>{`최고 ${Math.floor(weather?.main.temp_max)}Cº/ 최저 ${Math.floor(weather?.main.temp_min)}Cº`}</h3>
       <h3>{`풍속 ${weather?.wind.speed} m/s`}</h3>
       <h3>{`습도 ${weather?.main.humidity} %`}</h3>

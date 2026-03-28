@@ -52,12 +52,19 @@ function App() {
     // 받아온 후 로딩 끄기
     setLoading(false);
   };
+  // 현재위치 도시 불러오는 함수
+  const handleCityChange = (city) => {
+    if (city === 'current') {
+      setCity('');
+    } else {
+      setCity(city);
+    }
+  };
   // 도시 정보 불러오는 함수
   const getWeatherByCity = async () => {
     // 클릭하여 변경된 city state를 담는다
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=5276c98c6ea7b92a652b3169f3f6e807&lang=kr`;
     setLoading(true);
-
     let response = await fetch(url);
     let data = await response.json();
     // 클릭하여 변경된 도시의 날씨정보
@@ -84,7 +91,7 @@ function App() {
       {/* 삼항연산으로 로딩일때 선별적으로 박스UI표시 */}
       {loading ? (
         <div className="container">
-          /* 로딩스피너 */
+          { /* 로딩스피너 */ }
           <ClipLoader
             color="#f88c6b"
             loading={loading}
@@ -98,7 +105,11 @@ function App() {
           {/* 프롭스로 weather data 넘김  */}
           <Weatherbox weather={weather} />
           {/* 프롭스로 cities 넘김 / setCity도 넘김 */}
-          <WeatherButton cities={cities} setCity={setCity} />
+          <WeatherButton
+            cities={cities}
+            setCity={city}
+            handleCityChange={handleCityChange}
+          />
         </div>
       )}
     </div>
