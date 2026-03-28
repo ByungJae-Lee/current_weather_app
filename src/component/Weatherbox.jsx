@@ -9,10 +9,14 @@ const Weatherbox = ({ weather }) => {
       {/* weather.name만 쓰면 에러가 남, 렌더상태에 null이라서 보여줄게 없기 때문
       따라서  {weather && weather.name} 해도 되지만 {weather?.name}도 같은의미 
       weather가 참이면 name을 보여줘라*/}
-      <div>{weather?.name}</div>
-      {/* 화시표현 섭씨 *1.8 +32 */}
-      <h2>{`현재온도 ${Math.floor(weather?.main.temp)}Cº/ ${Math.floor(weather?.main.temp * 1.8 + 32) }Fº`}</h2>
-      <h3>{weather?.weather[0].description}</h3>
+      <h1>{weather?.name}</h1>
+      {/* 날씨상태 */}
+      <h2>{weather?.weather[0].description}</h2>
+      {/* 온도 */}
+      <h3>{`현재 ${Math.floor(weather?.main.temp)}Cº/ 체감 ${Math.floor(weather?.main.feels_like)}Cº`}</h3>
+      <h3>{`최고 ${Math.floor(weather?.main.temp_max)}Cº/ 최저 ${Math.floor(weather?.main.temp_min)}Cº`}</h3>
+      <h3>{`풍속 ${weather?.wind.speed} m/s`}</h3>
+      <h3>{`습도 ${weather?.main.humidity} %`}</h3>
     </div>
   );
 };

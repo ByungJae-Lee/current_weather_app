@@ -1,5 +1,5 @@
 body {
-  background: url('https://png.pngtree.com/thumb_back/fw800/background/20230706/pngtree-sunny-day-at-a-japanese-garden-with-blooming-sakura-trees-and-image_3812266.jpg');
+  background: url('https://marketplace.canva.com/vrk_w/MAFS2Avrk_w/1/tl/canva-gradient-light-blue-background-MAFS2Avrk_w.jpg');
   height: 100vh;
   /* 화면 반복하지 않게 */
   background-repeat: no-repeat;
@@ -24,8 +24,26 @@ body {
   border: 5px solid white;
   /* 내부 공간 여백 */
   padding: 50px;
-
+  width: 400px;
+  
   border-radius: 30px;
   /* 내부 색상설정 */
   background-color: beige;
+}
+.weather-box h1 {
+  display: flex;
+  justify-content: center;
+}
+.weather-box h2 {
+  display: flex;
+  justify-content: center;
+}
+.weather-box h3 {
+  display: flex;
+  justify-content: center;
+}
+
+.button_main button {
+  border-radius: 30px;
+  margin: 10px;
 }

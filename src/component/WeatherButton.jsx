@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 const WeatherButton = ({ cities, setCity }) => {
   // console.log(cities);
   return (
-    <div>
+    <div className='button_main'>
       <Button variant="warning">Current Location</Button>
       {/* map메서드로 순회하며 버튼을 그림,
       onClick */}
