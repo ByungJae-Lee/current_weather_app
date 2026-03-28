@@ -10,7 +10,7 @@ const WeatherButton = ({
   return (
     <div className="button_main">
       <Button
-        variant={`${setCity === '' ? 'outline-warning' : 'warning'}`}
+        variant={`${setCity === '' ? 'warning' : 'outline-warning'}`}
         onClick={() => handleCityChange('current')}
       >
         Current Location
@@ -19,7 +19,7 @@ const WeatherButton = ({
       onClick */}
       {cities.map((city) => (
         <Button
-          variant={`${setCity === city ? 'outline-warning' : 'warning'}`}
+          variant={`${setCity === city ? 'warning' : 'outline-warning'}`}
           // 버튼을 클릭하면 -> App에 있는 city를 설정해준다
           onClick={() => handleCityChange(city)}
         >
